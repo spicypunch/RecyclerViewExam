@@ -1,21 +1,31 @@
-package com.example.recyclerviewexam.db
+package com.example.recyclerviewexam
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewexam.databinding.ItemViewBinding
+import com.example.recyclerviewexam.db.ItemEntity
 
-class RecyclerViewAdapter(private val itemList: ArrayList<ItemEntity>) :
-    RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
+class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
+
+    private val itemList = mutableListOf<ItemEntity>()
 
         class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
             val title = binding.title
             val content = binding.content
-
-            val root = binding.root
         }
 
+    fun updateList(items: MutableList<ItemEntity>) {
+        Log.e("items" , items.toString())
+        itemList.clear()
+        itemList.addAll(items)
+    }
 
+    fun updateList2(items: MutableList<ItemEntity>) {
+        itemList.clear()
+        itemList.addAll(items)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding: ItemViewBinding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)

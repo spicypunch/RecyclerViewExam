@@ -1,62 +1,91 @@
 package com.example.recyclerviewexam
 
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.example.recyclerviewexam.databinding.ActivityMainBinding
 import com.example.recyclerviewexam.db.ItemEntity
-import com.example.recyclerviewexam.db.RecyclerViewAdapter
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
-    private lateinit var itemList: ItemEntity
+    private lateinit var itemList: MutableList<ItemEntity>
+
+    var count: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        adapter = RecyclerViewAdapter(this)
-//        binding.recyclerView.adapter = adapter
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = RecyclerViewAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.plusBtn.setOnClickListener {
-
+            addList()
         }
 
         binding.minusBtn.setOnClickListener {
-
+            removeList()
         }
-
-        getList()
     }
 
-    private fun getList() {
-        val itemList = (0..100).map {
-            for (i in 1..100) {
-                ItemEntity(title = i.toString(), content = i.toString())
-            }
-        }
-
+    private fun addList() {
 //        val itemList = (0..100).map {
-//            val index = (1..100).toList()
-//            ItemEntity(title = index.toString(), content = index.toString())
+//            for (i in 1..100) {
+//                ItemEntity(title = i.toString(), content = i.toString())
+//            }
 //        }
 
-        adapter = RecyclerViewAdapter(itemList as ArrayList<ItemEntity>)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-//        adapter.updateList(itemList)
-        adapter.notifyDataSetChanged()
+        itemList = (1..++count).map {
+            Log.e("count", count.toString())
+            ItemEntity(title = it.toString(), content = it.toString())
+        } as MutableList<ItemEntity>
 
+
+        val startNum = adapter.itemCount
+        Log.e("startNum", startNum.toString())
+        adapter.updateList(itemList)
+        Log.e("itemList", itemList.toString())
+//        adapter.updateList(ManageList.makeList(count))
+        adapter.notifyItemRangeInserted(startNum, itemList.size)
+
+    }
+
+    private fun removeList() {
+        if (count != 0) {
+            itemList.removeAt(--count)
+            Log.e("itemList2", itemList.toString())
+            val startNum = adapter.itemCount
+            Log.e("startNum2", startNum.toString())
+            adapter.updateList(itemList)
+            adapter.notifyItemRangeInserted(startNum, itemList.size)
+        }
     }
 
     override fun onRestart() {
         super.onRestart()
     }
+
+    //companion object 이용해보기
+//    class ManageList {
+//        companion object {
+//            fun makeList(cnt: Int) {
+//                (1..cnt).map {
+//                    Log.e("count", cnt.toString())
+//                    ItemEntity(title = cnt.toString(), content = cnt.toString())
+//                }
+//            }
+//
+////            val itemList = mutableMapOf("title" to 1, "content" to 1)
+//
+//        }
+//    }
+
 
 }
