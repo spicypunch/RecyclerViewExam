@@ -5,24 +5,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewexam.databinding.ItemViewBinding
-import com.example.recyclerviewexam.db.ItemEntity
+import com.example.recyclerviewexam.db.RecyclerViewItem
 
-class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
-
-    private val itemList = mutableListOf<ItemEntity>()
+class RecyclerViewAdapter(private val itemList: MutableList<RecyclerViewItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
 
         class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
             val title = binding.title
             val content = binding.content
         }
 
-    fun updateList(items: MutableList<ItemEntity>) {
+    fun updateList(items: MutableList<RecyclerViewItem>) {
         Log.e("items" , items.toString())
         itemList.clear()
         itemList.addAll(items)
     }
 
-    fun updateList2(items: MutableList<ItemEntity>) {
+    fun updateList2(items: MutableList<RecyclerViewItem>) {
         itemList.clear()
         itemList.addAll(items)
     }
