@@ -11,18 +11,16 @@ import com.example.recyclerviewexam.db.ItemEntity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: RecyclerViewAdapter
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val adapter by lazy { RecyclerViewAdapter() }
     private lateinit var itemList: MutableList<ItemEntity>
 
     var count: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        adapter = RecyclerViewAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
