@@ -1,6 +1,5 @@
 package com.example.recyclerviewexam
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +14,11 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         itemList.clear()
         itemList.addAll(items)
     }
-        class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
-            val title = binding.title
-            val content = binding.content
+        class MyViewHolder(private val binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+
+            fun bind(item: RecyclerViewItem) {
+                binding.data = item
+            }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -26,12 +27,8 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val data = itemList[position]
-        holder.title.text = data.title
-        holder.content.text = data.content
+        holder.bind(itemList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 }
