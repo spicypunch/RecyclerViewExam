@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
+        binding.data = viewModel
 
         binding.recyclerView.run {
             adapter = this@MainActivity.adapter

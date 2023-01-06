@@ -7,21 +7,27 @@ import androidx.lifecycle.ViewModel
 import com.example.recyclerviewexam.db.RecyclerViewItem
 
 class ViewModel: ViewModel() {
-    private var _itemList = MutableLiveData<MutableList<RecyclerViewItem>> ()
+    private var _itemList = MutableLiveData<MutableList<RecyclerViewItem>>()
     val itemList: LiveData<MutableList<RecyclerViewItem>>
         get() = _itemList
-    private var count: Int = 0
+
+    private var count: Int = 1
 
     fun add() {
-        Log.e("test", "add")
+        Log.e("check",_itemList.value.toString())
         ++count
-        itemList.value!!.add(RecyclerViewItem(count.toString(), count.toString()))
+        _itemList.value = _itemList.value?.toMutableList().also {
+            it?.add(RecyclerViewItem(count.toString(), count.toString()))
+            Log.e("check2", _itemList.value.toString())
+
+        }
     }
+
     fun remove() {
         Log.e("test", "remove")
         if (count != 0) {
             --count
-            itemList.value!!.removeAt(count)
+            _itemList.value!!.removeAt(count)
         }
     }
 }
