@@ -1,5 +1,6 @@
 package com.example.recyclerviewexam
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
     private val itemList = mutableListOf<RecyclerViewItem>()
 
     fun updateList(items: MutableList<RecyclerViewItem>) {
+        Log.e("adapter", "adapter")
         itemList.clear()
         itemList.addAll(items)
     }

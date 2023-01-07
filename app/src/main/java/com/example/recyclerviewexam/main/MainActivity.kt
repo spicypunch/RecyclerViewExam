@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.itemList.observe(this, Observer {
             (binding.recyclerView.adapter as RecyclerViewAdapter).updateList(it)
+            adapter.notifyItemChanged(adapter.itemCount)
         })
     }
 }

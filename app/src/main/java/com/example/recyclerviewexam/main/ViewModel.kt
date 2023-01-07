@@ -11,23 +11,29 @@ class ViewModel: ViewModel() {
     val itemList: LiveData<MutableList<RecyclerViewItem>>
         get() = _itemList
 
-    private var count: Int = 1
+    init {
+        _itemList.value = mutableListOf()
+    }
+
+    private var count: Int = 0
 
     fun add() {
-        Log.e("check",_itemList.value.toString())
         ++count
         _itemList.value = _itemList.value?.toMutableList().also {
             it?.add(RecyclerViewItem(count.toString(), count.toString()))
-            Log.e("check2", _itemList.value.toString())
+            Log.e("add", _itemList.value.toString())
 
         }
     }
 
     fun remove() {
-        Log.e("test", "remove")
         if (count != 0) {
             --count
-            _itemList.value!!.removeAt(count)
+            _itemList.value = _itemList.value?.toMutableList().also {
+                it?.removeAt(count)
+                Log.e("remove", _itemList.value.toString())
+
+            }
         }
     }
 }
