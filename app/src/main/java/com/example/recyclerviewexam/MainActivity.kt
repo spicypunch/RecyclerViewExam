@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private fun addList() {
         count++
         itemList.add(RecyclerViewItem("$count", "$count"))
-        Log.e("list", itemList.toString())
         binding.recyclerView.adapter = adapter
 
     }
@@ -40,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private fun removeList() {
         if (count != 0) {
             itemList.removeAt(--count)
-            Log.e("list", itemList.toString())
             binding.recyclerView.adapter = adapter
         }
 
