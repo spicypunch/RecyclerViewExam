@@ -17,6 +17,8 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
 
         itemList.clear()
         itemList.addAll(items)
+
+        diffResult.dispatchUpdatesTo(this)
     }
         class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
             val title = binding.title
