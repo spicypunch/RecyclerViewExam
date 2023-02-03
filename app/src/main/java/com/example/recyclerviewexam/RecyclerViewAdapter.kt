@@ -2,12 +2,22 @@ package com.example.recyclerviewexam
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewexam.databinding.ItemViewBinding
 import com.example.recyclerviewexam.db.RecyclerViewItem
 
-class RecyclerViewAdapter(private val itemList: MutableList<RecyclerViewItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
+class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
 
+    private val itemList = mutableListOf<RecyclerViewItem>()
+
+    fun updateList(items: MutableList<RecyclerViewItem>) {
+        val diffCallback = DiffUtilCallback(itemList, items)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        itemList.clear()
+        itemList.addAll(items)
+    }
         class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
             val title = binding.title
             val content = binding.content

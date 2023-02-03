@@ -10,7 +10,7 @@ import com.example.recyclerviewexam.db.RecyclerViewItem
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val adapter by lazy { RecyclerViewAdapter(itemList) }
+    private val adapter by lazy { RecyclerViewAdapter() }
     private var itemList = mutableListOf<RecyclerViewItem>()
 
     var count: Int = 0
@@ -32,13 +32,14 @@ class MainActivity : AppCompatActivity() {
     private fun addList() {
         count++
         itemList.add(RecyclerViewItem("$count", "$count"))
+        adapter.updateList(itemList)
         binding.recyclerView.adapter = adapter
-
     }
 
     private fun removeList() {
         if (count != 0) {
             itemList.removeAt(--count)
+            adapter.updateList(itemList)
             binding.recyclerView.adapter = adapter
         }
 
