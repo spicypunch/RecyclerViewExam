@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.plusBtn.setOnClickListener {
@@ -32,15 +33,11 @@ class MainActivity : AppCompatActivity() {
     private fun addList() {
         count++
         itemList.add(RecyclerViewItem("$count", "$count"))
-        binding.recyclerView.adapter = adapter
-
     }
 
     private fun removeList() {
         if (count != 0) {
             itemList.removeAt(--count)
-            binding.recyclerView.adapter = adapter
         }
-
     }
 }
