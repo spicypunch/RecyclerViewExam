@@ -3,40 +3,41 @@ package com.example.recyclerviewexam
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewexam.databinding.ItemViewBinding
 import com.example.recyclerviewexam.db.RecyclerViewItem
 
-class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
+class RecyclerViewAdapter() :
+    ListAdapter<RecyclerViewItem, RecyclerViewAdapter.MyViewHolder>(diffUtil) {
+    class MyViewHolder(private val binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val itemList = mutableListOf<RecyclerViewItem>()
-
-    fun updateList(items: MutableList<RecyclerViewItem>) {
-        val diffCallback = DiffUtilCallback(itemList, items)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        itemList.clear()
-        itemList.addAll(items)
-
-        diffResult.dispatchUpdatesTo(this)
-    }
-        class MyViewHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
-            val title = binding.title
-            val content = binding.content
+        fun bind(item: RecyclerViewItem) {
+            binding.data = item
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding: ItemViewBinding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemViewBinding =
+            ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val data = itemList[position]
-        holder.title.text = data.title
-        holder.content.text = data.content
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
+    companion object {
+
+        val diffUtil = object : DiffUtil.ItemCallback<RecyclerViewItem>() {
+
+            override fun areItemsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+                return oldItem.title == newItem.title
+            }
+
+            override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }
